@@ -1,4 +1,5 @@
-## **🦅 Ravenclaw House 📘**
+## ${\textsf{\color{blue}🦅 Ravenclaw House 📘}}$
+
 
 ### **Uczestnicy:**
 - **[hlagoda](https://github.com/hlagoda)**
@@ -15,5 +16,3 @@
    - ~~*Bycie niemiłym!!!*~~
 4. **_Nazwy własne napisz kursywą._**
 5. **_Struktura nazwy gałęzi powinna być zapisana jako `main`, `zadanie_<nrZadania>`._**
-
----
