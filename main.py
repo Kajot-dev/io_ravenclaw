@@ -1,5 +1,6 @@
 import time
 import random
+import csv
 from enum import Enum
 
 class Odleglosc(Enum):
@@ -102,3 +103,15 @@ def waluta_dict_na_str(fundusz: dict[str, int]) -> str:
         buffer.append(f"{ilosc} {waluta}")
         
     return " ".join(buffer)
+
+def nadaj_sowe(adresat: str, tresc_wiadomosci: str, potwierdzenie_odbioru: bool, odleglosc: Odleglosc, typ: TypPaczki, specjalna: SpecjalnaPaczka):
+    
+    koszt = wybierz_sowe_zwroc_koszt(potwierdzenie_odbioru, odleglosc, typ, specjalna)
+    koszt_str = waluta_dict_na_str(koszt)
+    
+    potwierdzenie_odbioru_str = "TAK" if potwierdzenie_odbioru else "NIE"
+    
+    with open("poczta_nadania_lista.csv", "w+") as f:
+        csv_writer = csv.writer(f)
+        csv_writer.writerow([adresat, tresc_wiadomosci, koszt_str, potwierdzenie_odbioru_str])
+
