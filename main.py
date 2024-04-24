@@ -1,17 +1,19 @@
 import time
 import random
 
+
 def wyslij_sowe(adresat, tresc):
     print(f"Wysłanie sowy do {adresat} z treścią: {tresc}")
     time.sleep(1)
-    
+
     if random.random() <= 0.85:
         print("Sowa dostarczona")
         return True
     else:
         print("Dostarczenie sowy niemożliwe")
         return False
-    
+
+
 def wybierz_sowe_zwroc_koszt(odbior, odleglosc, typ, specjalna):
     koszt = {"galeon": 0, "sykl": 0, "knut": 0}
     koszt['knut'] += 7 if odbior else 0
@@ -28,6 +30,7 @@ def wybierz_sowe_zwroc_koszt(odbior, odleglosc, typ, specjalna):
     koszt['sykl'] += odleglosc_koszt[odleglosc][typ][1]
 
     return koszt
+
 
 def licz_sume(fundusz):
     # Pobranie list monet dla każdego rodzaju
@@ -52,19 +55,20 @@ def licz_sume(fundusz):
     }
     return wynik
 
+
 def waluta_dict_na_str(fundusz: dict[str, int]) -> str:
     # nie zmieniamy kolejności walut w słowniku
     buffer = []
     for waluta, ilosc in fundusz.items():
-        
+
         if ilosc == 0:
             continue
-        
+
         last_digit = ilosc
 
         while last_digit >= 10:
             last_digit = last_digit % 10
-            
+
         if last_digit > 1 and last_digit < 5:
             match waluta[-1]:
                 case "l":
@@ -78,7 +82,26 @@ def waluta_dict_na_str(fundusz: dict[str, int]) -> str:
                     waluta += "i"
                 case _:
                     waluta += "ów"
-            
+
         buffer.append(f"{ilosc} {waluta}")
-        
+
     return " ".join(buffer)
+
+
+def waluta_str_na_dict(ciag_znakow):
+    # Podział ciągu znaków po spacji
+    elementy = ciag_znakow.split()
+
+    # Inicjalizacja słownika
+    wynik = {'galeon': 0, 'sykl': 0, 'knut': 0}
+
+    # Przepisanie wartości z ciągu znaków do słownika
+    for i in range(0, len(elementy), 2):
+        if elementy[i+1].startswith('g'):
+            wynik['galeon'] = int(elementy[i])
+        elif elementy[i+1].startswith('s'):
+            wynik['sykl'] = int(elementy[i])
+        elif elementy[i+1].startswith('k'):
+            wynik['knut'] = int(elementy[i])
+
+    return wynik
