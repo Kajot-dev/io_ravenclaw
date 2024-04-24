@@ -1,6 +1,21 @@
 import time
 import random
+import csv
+from enum import Enum
 
+class Odleglosc(Enum):
+    LOKALNA = "lokalna"
+    KRAJOWA = "krajowa"
+    DALEKOBIEZNA = "dalekobieżna"
+    
+class TypPaczki(Enum):
+    LIST = "list"
+    PACZKA = "paczka"
+    
+class SpecjalnaPaczka(Enum):
+    WYJEC = "wyjec"
+    LIST_GONCZY = "list gonczy"
+    NIE_DOTYCZY = "nie dotyczy"
 
 def wyslij_sowe(adresat, tresc):
     print(f"Wysłanie sowy do {adresat} z treścią: {tresc}")
@@ -12,18 +27,22 @@ def wyslij_sowe(adresat, tresc):
     else:
         print("Dostarczenie sowy niemożliwe")
         return False
-
-
-def wybierz_sowe_zwroc_koszt(odbior, odleglosc, typ, specjalna):
+    
+def wybierz_sowe_zwroc_koszt(odbior: bool, odleglosc: Odleglosc, typ: TypPaczki, specjalna: SpecjalnaPaczka):
     koszt = {"galeon": 0, "sykl": 0, "knut": 0}
-    koszt['knut'] += 7 if odbior else 0
-    koszt['knut'] += 4 if specjalna == "wyjec" else 1 if specjalna == 'list gonczy' else 0
+    if odbior:
+        koszt["knut"] += 7
+    
+    if specjalna == SpecjalnaPaczka.WYJEC:
+        koszt["knut"] += 4
+    elif specjalna == SpecjalnaPaczka.LIST_GONCZY:
+        koszt["knut"] += 1
 
     # [knut, sykl]
     odleglosc_koszt = {
-        "lokalna": {"list": [2, 0], "paczka": [7, 0]},
-        "krajowa": {"list": [12, 0], "paczka": [2, 1]},
-        "dalekobiezna": {"list": [20, 0], "paczka": [1, 2]}
+        Odleglosc.LOKALNA: {TypPaczki.LIST: [2, 0], TypPaczki.PACZKA: [7, 0]},
+        Odleglosc.KRAJOWA: {TypPaczki.LIST: [12, 0], TypPaczki.PACZKA: [2, 1]},
+        Odleglosc.DALEKOBIEZNA: {TypPaczki.LIST: [20, 0], TypPaczki.PACZKA: [1, 2]}
     }
 
     koszt['knut'] += odleglosc_koszt[odleglosc][typ][0]
@@ -87,7 +106,6 @@ def waluta_dict_na_str(fundusz: dict[str, int]) -> str:
 
     return " ".join(buffer)
 
-
 def waluta_str_na_dict(ciag_znakow):
     # Podział ciągu znaków po spacji
     elementy = ciag_znakow.split()
@@ -105,3 +123,15 @@ def waluta_str_na_dict(ciag_znakow):
             wynik['knut'] = int(elementy[i])
 
     return wynik
+
+def nadaj_sowe(adresat: str, tresc_wiadomosci: str, potwierdzenie_odbioru: bool, odleglosc: Odleglosc, typ: TypPaczki, specjalna: SpecjalnaPaczka):
+    
+    koszt = wybierz_sowe_zwroc_koszt(potwierdzenie_odbioru, odleglosc, typ, specjalna)
+    koszt_str = waluta_dict_na_str(koszt)
+    
+    potwierdzenie_odbioru_str = "TAK" if potwierdzenie_odbioru else "NIE"
+    
+    with open("poczta_nadania_lista.csv", "w+") as f:
+        csv_writer = csv.writer(f)
+        csv_writer.writerow([adresat, tresc_wiadomosci, koszt_str, potwierdzenie_odbioru_str])
+
