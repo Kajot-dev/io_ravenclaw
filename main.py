@@ -1,21 +1,25 @@
 def licz_sume(fundusz):
-    geleon = fundusz.get('geleon')
-    sykl = fundusz.get('sykl')
-    knut = fundusz.get('knut')
+    # Pobranie list monet dla każdego rodzaju
+    geleon = fundusz.get('geleon', [0, 0, 0])
+    sykl = fundusz.get('sykl', [0, 0, 0])
+    knut = fundusz.get('knut', [0, 0, 0])
 
-    # Obliczanie sumy w knutach
-    suma_knutow = geleon * 17 * 21 + sykl * 21 + knut
+    # Obliczenie sumy wartości monet w knutach
+    suma_knutow = sum(geleon) * 17 * 21 + sum(sykl) * 21 + sum(knut)
 
-    # Konwersja na galeony
+    # Konwersja na galeony, sykle i knuty
     ile_galeonow = suma_knutow // (17 * 21)
     suma_knutow %= (17 * 21)
-    sredni_nominale = suma_knutow // 21
+    ile_sykli = suma_knutow // 21
     suma_knutow %= 21
 
     # Tworzenie słownika wynikowego
     wynik = {
-        'geleon': ile_galeonow,
-        'sykl': sredni_nominale,
+        'galeon': ile_galeonow,
+        'sykl': ile_sykli,
         'knut': suma_knutow
     }
     return wynik
+
+
+
