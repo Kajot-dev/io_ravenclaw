@@ -1,5 +1,20 @@
 import time
 import random
+from enum import Enum
+
+class Odleglosc(Enum):
+    LOKALNA = "lokalna"
+    KRAJOWA = "krajowa"
+    DALEKOBIEZNA = "dalekobieżna"
+    
+class TypPaczki(Enum):
+    LIST = "list"
+    PACZKA = "paczka"
+    
+class SpecjalnaPaczka(Enum):
+    WYJEC = "wyjec"
+    LIST_GONCZY = "list gonczy"
+    NIE_DOTYCZY = "nie dotyczy"
 
 def wyslij_sowe(adresat, tresc):
     print(f"Wysłanie sowy do {adresat} z treścią: {tresc}")
@@ -12,16 +27,21 @@ def wyslij_sowe(adresat, tresc):
         print("Dostarczenie sowy niemożliwe")
         return False
     
-def wybierz_sowe_zwroc_koszt(odbior, odleglosc, typ, specjalna):
+def wybierz_sowe_zwroc_koszt(odbior: bool, odleglosc: Odleglosc, typ: TypPaczki, specjalna: SpecjalnaPaczka):
     koszt = {"galeon": 0, "sykl": 0, "knut": 0}
-    koszt['knut'] += 7 if odbior else 0
-    koszt['knut'] += 4 if specjalna == "wyjec" else 1 if specjalna == 'list gonczy' else 0
+    if odbior:
+        koszt["knut"] += 7
+    
+    if specjalna == SpecjalnaPaczka.WYJEC:
+        koszt["knut"] += 4
+    elif specjalna == SpecjalnaPaczka.LIST_GONCZY:
+        koszt["knut"] += 1
 
     # [knut, sykl]
     odleglosc_koszt = {
-        "lokalna": {"list": [2, 0], "paczka": [7, 0]},
-        "krajowa": {"list": [12, 0], "paczka": [2, 1]},
-        "dalekobiezna": {"list": [20, 0], "paczka": [1, 2]}
+        Odleglosc.LOKALNA: {TypPaczki.LIST: [2, 0], TypPaczki.PACZKA: [7, 0]},
+        Odleglosc.KRAJOWA: {TypPaczki.LIST: [12, 0], TypPaczki.PACZKA: [2, 1]},
+        Odleglosc.DALEKOBIEZNA: {TypPaczki.LIST: [20, 0], TypPaczki.PACZKA: [1, 2]}
     }
 
     koszt['knut'] += odleglosc_koszt[odleglosc][typ][0]
