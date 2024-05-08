@@ -1,0 +1,20 @@
+# comment
+
+name: Python simple test
+
+on:
+    push:
+        branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
+
+
+jobs:
+    build: 
+
+        run-on: ubuntu-latest
+
+        steps:
+        - name: Ola test
+          run: python ola.py
+
