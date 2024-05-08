@@ -1,0 +1,1 @@
+print("Witamy Kubę (innych ludzi w sumie też)")
