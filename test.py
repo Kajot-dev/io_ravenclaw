@@ -1,4 +1,4 @@
-import main
+from main import * 
 
 def test_wybierz_sowe_zwroc_koszt(odbior: bool, odleglosc, typ, specjalna, wynik):
     
