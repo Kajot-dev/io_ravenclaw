@@ -15,5 +15,4 @@ def test_wyslij_sowe():
     # Sprawdzanie, czy sukces pojawia się w okolicach 85%
     assert 0.80 <= wspolczynnik_sukcesow <= 0.90
 
-if __name__ == '__main__':
-    test_wyslij_sowe()
+test_wyslij_sowe()
