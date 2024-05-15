@@ -83,25 +83,6 @@ def waluta_dict_na_str(fundusz: dict[str, int]) -> str:
         if ilosc == 0:
             continue
 
-        last_digit = ilosc
-
-        while last_digit >= 10:
-            last_digit = last_digit % 10
-
-        if last_digit > 1 and last_digit < 5:
-            match waluta[-1]:
-                case "l":
-                    waluta += "e"
-                case _:
-                    waluta += "y"
-
-        elif last_digit >= 5:
-            match waluta[-1]:
-                case "l":
-                    waluta += "i"
-                case _:
-                    waluta += "ów"
-
         buffer.append(f"{ilosc} {waluta}")
 
     return " ".join(buffer)
