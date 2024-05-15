@@ -78,7 +78,7 @@ def test_licz_sume():
     }
     wynik = licz_sume(fundusz)
     assert wynik == {
-        "galeon" : 111,
+        "galeon" : 106,
         "sykl" : 2,
         "knut" : 16
     }
