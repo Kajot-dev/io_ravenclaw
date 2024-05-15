@@ -36,7 +36,7 @@ def wybierz_sowe_zwroc_koszt(odbior: bool, odleglosc: Odleglosc, typ: TypPaczki,
     if specjalna == SpecjalnaPaczka.WYJEC:
         koszt["knut"] += 4
     elif specjalna == SpecjalnaPaczka.LIST_GONCZY:
-        koszt["knut"] += 1
+        koszt["sykl"] += 1
 
     # [knut, sykl]
     odleglosc_koszt = {
@@ -83,25 +83,6 @@ def waluta_dict_na_str(fundusz: dict[str, int]) -> str:
         if ilosc == 0:
             continue
 
-        last_digit = ilosc
-
-        while last_digit >= 10:
-            last_digit = last_digit % 10
-
-        if last_digit > 1 and last_digit < 5:
-            match waluta[-1]:
-                case "l":
-                    waluta += "e"
-                case _:
-                    waluta += "y"
-
-        elif last_digit >= 5:
-            match waluta[-1]:
-                case "l":
-                    waluta += "i"
-                case _:
-                    waluta += "ów"
-
         buffer.append(f"{ilosc} {waluta}")
 
     return " ".join(buffer)
@@ -134,4 +115,3 @@ def nadaj_sowe(adresat: str, tresc_wiadomosci: str, potwierdzenie_odbioru: bool,
     with open("poczta_nadania_lista.csv", "w+") as f:
         csv_writer = csv.writer(f)
         csv_writer.writerow([adresat, tresc_wiadomosci, koszt_str, potwierdzenie_odbioru_str])
-
