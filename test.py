@@ -17,7 +17,7 @@ def test_waluta_dict_na_str():
     "sykl" : 2,
     "knut" : 13
 }
-    assert main.waluta_dict_na_str(fundusz_1) == "17 galeonów 2 sykle 1 knut"
+    assert main.waluta_dict_na_str(fundusz_1) == "17 galeon 2 sykl 13 knut"
 
 
     # Test 2: Sprawdzenie przypadku braku środków
@@ -26,12 +26,12 @@ def test_waluta_dict_na_str():
     "sykl" : 0,
     "knut" : 0
 }
-    assert waluta_dict_na_str(fundusz_2) == ""
+    assert main.waluta_dict_na_str(fundusz_2) == ""
 
 
     # Test 3: Sprawdzenie dla jednej waluty
     fundusz_3 = {"knut": 1}
-    assert waluta_dict_na_str(fundusz_3) == "1 knut"
+    assert main.waluta_dict_na_str(fundusz_3) == "1 knut"
 
 
     # Test 4: Sprawdzenie dla dużych wartości
@@ -40,7 +40,7 @@ def test_waluta_dict_na_str():
     "sykl" : 500000,
     "knut" : 200000
 }
-    assert waluta_dict_na_str(fundusz_4) == "1000000 galeonów 500000 sykli 200000 knutów"
+    assert main.waluta_dict_na_str(fundusz_4) == "1000000 galeon 500000 sykl 200000 knut"
 
 
 
