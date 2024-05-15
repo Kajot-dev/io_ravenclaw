@@ -32,10 +32,11 @@ def test_licz_sume():
     }
     wynik = licz_sume(fundusz)
     assert wynik == {
-        "galeon" : 106,
+        "galeon" : 111,
         "sykl" : 2,
         "knut" : 16
     }
+
 test_licz_sume()
 
 
