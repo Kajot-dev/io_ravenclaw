@@ -131,7 +131,7 @@ def nadaj_sowe(adresat: str, tresc_wiadomosci: str, potwierdzenie_odbioru: bool,
     
     potwierdzenie_odbioru_str = "TAK" if potwierdzenie_odbioru else "NIE"
     
-    with open("poczta_nadania_lista.csv", "w+") as f:
+    with open("poczta_nadania_lista.csv", "a") as f:
         csv_writer = csv.writer(f)
         csv_writer.writerow([adresat, tresc_wiadomosci, koszt_str, potwierdzenie_odbioru_str])
 
