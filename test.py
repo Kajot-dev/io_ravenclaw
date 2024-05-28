@@ -136,9 +136,9 @@ def test_nadaj_sowe():
         content = f.read().strip().splitlines()
         
         # Assert second last line
-        assert content[-2] == 'Hermiona Granger,Ej pożycz mi 20 złotych,12 knutów,NIE'
+        assert content[-2] == 'Hermiona Granger,Ej pożycz mi 20 złotych,12 knut,NIE'
         
         # Assert last line
-        assert content[-1] == 'Harry Potter,Przestań pożyczać ode mnie pieniądze,31 knutów,TAK'
+        assert content[-1] == 'Harry Potter,Przestań pożyczać ode mnie pieniądze,31 knut,TAK'
 
 test_nadaj_sowe()
